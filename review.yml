@@ -1,0 +1,87 @@
+name: Garmin Health API Push
+description: Garmin Health API push notification surface review — gated specification, no public payload schemas.
+url: https://raw.githubusercontent.com/api-evangelist/garmin/refs/heads/main/review.yml
+created: '2026-05-30'
+modified: '2026-05-30'
+reviews:
+  - date: '2026-05-30'
+    focus: Garmin Health API push notification surface (Activities, Dailies, Sleeps, Epochs, Stress Details, Body Composition, User Metrics, MoveIQ, Pulse Ox, Respiration, Health Snapshot, All-Day HRV, Skin Temperature)
+    target_specification: AsyncAPI 2.6
+    outcome: Not modeled — public surface insufficient for a faithful AsyncAPI document
+    summary: >-
+      The Garmin Connect Developer Program Health API push surface is acknowledged
+      on the public marketing page at developer.garmin.com/gc-developer-program/health-api/
+      under the phrase "Ping/Pull or Push Architecture: Choose the integration option
+      that best matches your needs," and the page enumerates data categories at a
+      marketing level (heart rate, steps, calories, sleep, respiration, body
+      composition, plus detailed stress, pulse-ox, and epoch summaries). However,
+      no publicly reachable Garmin page exposes the push notification mechanics
+      needed to construct an AsyncAPI 2.6 document — the channel naming, the JSON
+      envelope, the per-summary payload schemas, the partner callback URL
+      registration model, the retry/On-Hold semantics, or the security scheme.
+      The Health REST API Specification (current public references cite version
+      2.9.6) and the Push Notification Specification PDFs are hosted on
+      developerportal.garmin.com behind partner authentication; the documents
+      index at developerportal.garmin.com/developer-programs/programs-docs returns
+      HTTP 403 to unauthenticated requests. Access requires approval to the Garmin
+      Connect Developer Program (application via developer.garmin.com/gc-developer-program/overview/,
+      contact connect-support@developer.garmin.com). Third-party paraphrases of
+      the envelope shape and per-type field lists exist on aggregator sites (Terra,
+      ROOK, Open Wearables), but those are not first-party Garmin documentation
+      and cannot be used as the source of record without fabricating field names,
+      types, formats, channel paths, and operation IDs. Per the no-fabrication
+      rule, this surface is recorded as gated and left unmodeled rather than
+      reconstructed from secondary sources.
+    sources:
+      - https://developer.garmin.com/gc-developer-program/health-api/
+      - https://developer.garmin.com/gc-developer-program/overview/
+      - https://developerportal.garmin.com/developer-programs/connect-developer-api
+      - https://developerportal.garmin.com/developer-programs/programs-docs
+      - https://developerportal.garmin.com/sites/default/files/OAuth2PKCE_1.pdf
+    findings:
+      - area: Push architecture acknowledged
+        status: Mentioned on public marketing page (no mechanics)
+      - area: Channel / endpoint registration model
+        status: Not publicly documented
+      - area: Push envelope JSON schema (top-level wrapper keys)
+        status: Not publicly documented by Garmin
+      - area: Activities summary payload schema
+        status: Gated (partner PDF)
+      - area: Dailies summary payload schema
+        status: Gated (partner PDF)
+      - area: Sleeps summary payload schema
+        status: Gated (partner PDF)
+      - area: Epochs summary payload schema
+        status: Gated (partner PDF)
+      - area: Stress Details payload schema
+        status: Gated (partner PDF)
+      - area: Body Composition payload schema
+        status: Gated (partner PDF)
+      - area: User Metrics payload schema
+        status: Gated (partner PDF)
+      - area: MoveIQ payload schema
+        status: Gated (partner PDF)
+      - area: Pulse Ox payload schema
+        status: Gated (partner PDF)
+      - area: Respiration payload schema
+        status: Gated (partner PDF)
+      - area: Health Snapshot payload schema
+        status: Gated (partner PDF)
+      - area: All-Day HRV payload schema
+        status: Gated (partner PDF)
+      - area: Skin Temperature payload schema
+        status: Gated (partner PDF)
+      - area: Retry semantics / On-Hold behavior
+        status: Gated (referenced in third-party summaries, not on public Garmin pages)
+      - area: Push signature / security scheme
+        status: Not publicly documented
+      - area: Partner callback URL registration UI/API
+        status: Gated behind partner approval
+    access_path:
+      - Apply to Garmin Connect Developer Program at https://developer.garmin.com/gc-developer-program/overview/
+      - Email connect-support@developer.garmin.com to request specification access
+      - On approval, retrieve Health REST API Specification and Push Notification Specification PDFs from developerportal.garmin.com/developer-programs/programs-docs
+    revisit_when:
+      - Garmin publishes a public AsyncAPI/OpenAPI for the Health API push surface
+      - Partner approval is obtained and first-party PDFs can be referenced
+      - A Garmin-published GitHub repository exposes schemas for the push envelope

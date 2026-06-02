@@ -58,6 +58,9 @@ apis:
   - url: https://developer.garmin.com/gc-developer-program/overview/
     name: Garmin Connect Developer Program
     type: Portal
+  - url: review.yml
+    type: Review
+    name: Garmin Health API Push surface review (2026-05-30)
   description: Inbound cloud API for receiving all-day health summary metrics from Garmin wearables — daily
     summaries, epoch summaries, sleep data, heart rate, steps, stress, Body Battery, pulse ox, respiration,
     user-logged metrics, and more. Requires approval as a Garmin Connect Developer Program partner; access is
@@ -477,7 +480,7 @@ common:
   - https://github.com/garmin
   updated: '2026-05-25'
 created: '2026-05-25T00:00:00.000Z'
-modified: '2026-05-25'
+modified: '2026-05-30'
 position: Producing
 description: Garmin is the global leader in GPS-enabled wearables, cycling computers, outdoor handhelds,
   marine electronics, aviation avionics, and automotive navigation. Garmin's developer surface spans the
