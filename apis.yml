@@ -38,12 +38,16 @@ apis:
   - url: https://github.com/garmin/connectiq-companion-app-sdk-ios
     name: Connect IQ Companion App SDK for iOS
     type: SDK
-  description: Connect IQ is Garmin's open platform for building wearable apps that run on Garmin watches and
-    cycling computers. Developers write apps in Monkey C — Garmin's purpose-built object-oriented language — and
-    target five app categories (watch faces, data fields, widgets, device apps, audio content provider apps).
-    The SDK ships with device simulators, a VS Code Monkey C extension, and companion mobile SDKs for Android
-    (Maven Central) and iOS (GitHub) so phone apps can talk to Connect IQ apps over BLE. Apps are distributed
-    through the Connect IQ Store at apps.garmin.com. Current SDK version 9.1.0 (May 2026).
+  - url: graphql/garmin-graphql.md
+    type: GraphQL
+  description: Connect IQ is Garmin's open platform for building wearable apps that
+    run on Garmin watches and cycling computers. Developers write apps in Monkey C
+    — Garmin's purpose-built object-oriented language — and target five app categories
+    (watch faces, data fields, widgets, device apps, audio content provider apps).
+    The SDK ships with device simulators, a VS Code Monkey C extension, and companion
+    mobile SDKs for Android (Maven Central) and iOS (GitHub) so phone apps can talk
+    to Connect IQ apps over BLE. Apps are distributed through the Connect IQ Store
+    at apps.garmin.com. Current SDK version 9.1.0 (May 2026).
 - aid: garmin:garmin-connect-health-api
   name: Garmin Connect Health API
   tags:
@@ -61,10 +65,11 @@ apis:
   - url: review.yml
     type: Review
     name: Garmin Health API Push surface review (2026-05-30)
-  description: Inbound cloud API for receiving all-day health summary metrics from Garmin wearables — daily
-    summaries, epoch summaries, sleep data, heart rate, steps, stress, Body Battery, pulse ox, respiration,
-    user-logged metrics, and more. Requires approval as a Garmin Connect Developer Program partner; access is
-    via OAuth-authenticated user permissions and partner consumer keys. Production endpoints are rate-limited.
+  description: Inbound cloud API for receiving all-day health summary metrics from
+    Garmin wearables — daily summaries, epoch summaries, sleep data, heart rate, steps,
+    stress, Body Battery, pulse ox, respiration, user-logged metrics, and more. Requires
+    approval as a Garmin Connect Developer Program partner; access is via OAuth-authenticated
+    user permissions and partner consumer keys. Production endpoints are rate-limited.
 - aid: garmin:garmin-connect-activity-api
   name: Garmin Connect Activity API
   tags:
@@ -76,10 +81,10 @@ apis:
   properties:
   - url: https://developer.garmin.com/gc-developer-program/activity-api/
     type: Documentation
-  description: Inbound cloud API providing comprehensive workout and activity data across 30+ activity
-    categories — GPS tracks, FIT file fetch, manually entered activities, lap details, and detailed metrics
-    per activity. Partner-only access via the Garmin Connect Developer Program with OAuth-scoped user
-    permissions.
+  description: Inbound cloud API providing comprehensive workout and activity data
+    across 30+ activity categories — GPS tracks, FIT file fetch, manually entered
+    activities, lap details, and detailed metrics per activity. Partner-only access
+    via the Garmin Connect Developer Program with OAuth-scoped user permissions.
 - aid: garmin:garmin-connect-womens-health-api
   name: Garmin Connect Women's Health API
   tags:
@@ -92,8 +97,9 @@ apis:
   properties:
   - url: https://developer.garmin.com/gc-developer-program/womens-health-api/
     type: Documentation
-  description: Inbound cloud API exposing menstrual cycle tracking and pregnancy data captured in the Garmin
-    Connect mobile app. Partner-only access requiring approval; user permissions are granted via OAuth scope.
+  description: Inbound cloud API exposing menstrual cycle tracking and pregnancy data
+    captured in the Garmin Connect mobile app. Partner-only access requiring approval;
+    user permissions are granted via OAuth scope.
 - aid: garmin:garmin-connect-training-api
   name: Garmin Connect Training API
   tags:
@@ -105,9 +111,10 @@ apis:
   properties:
   - url: https://developer.garmin.com/gc-developer-program/training-api/
     type: Documentation
-  description: Outbound cloud API for pushing structured workouts and training plans from partner platforms
-    to a user's Garmin device. Supports the full Garmin workout step model (warmup, intervals, repeats, cool
-    down) and scheduled training-plan delivery synced via Garmin Connect.
+  description: Outbound cloud API for pushing structured workouts and training plans
+    from partner platforms to a user's Garmin device. Supports the full Garmin workout
+    step model (warmup, intervals, repeats, cool down) and scheduled training-plan
+    delivery synced via Garmin Connect.
 - aid: garmin:garmin-connect-courses-api
   name: Garmin Connect Courses API
   tags:
@@ -120,8 +127,9 @@ apis:
   properties:
   - url: https://developer.garmin.com/gc-developer-program/courses-api/
     type: Documentation
-  description: Outbound cloud API for pushing GPS courses and routes from partner platforms (Komoot, Strava,
-    Ride with GPS, etc. pattern) to a user's Garmin wearable or Edge cycling computer for automatic sync.
+  description: Outbound cloud API for pushing GPS courses and routes from partner
+    platforms (Komoot, Strava, Ride with GPS, etc. pattern) to a user's Garmin wearable
+    or Edge cycling computer for automatic sync.
 - aid: garmin:garmin-health-sdk
   name: Garmin Health SDK
   tags:
@@ -141,11 +149,12 @@ apis:
   - url: https://developer.garmin.com/health-sdk/standard-sdk/
     name: Standard SDK
     type: SDK
-  description: Mobile SDKs for iOS and Android that pair directly with Garmin wearables over BLE and stream
-    raw real-time sensor data — accelerometer, heart rate, pulse ox, respiration, stress, calories, steps,
-    Body Battery, and device battery — plus configurable advanced streams (gyroscope, actigraphy, beat-to-beat
-    intervals). Standard SDK ships HIPAA-compliant for healthcare deployments; Companion SDK combines real-time
-    streaming with the cloud Health API. Enterprise license required.
+  description: Mobile SDKs for iOS and Android that pair directly with Garmin wearables
+    over BLE and stream raw real-time sensor data — accelerometer, heart rate, pulse
+    ox, respiration, stress, calories, steps, Body Battery, and device battery — plus
+    configurable advanced streams (gyroscope, actigraphy, beat-to-beat intervals).
+    Standard SDK ships HIPAA-compliant for healthcare deployments; Companion SDK combines
+    real-time streaming with the cloud Health API. Enterprise license required.
 - aid: garmin:garmin-fit-sdk
   name: Garmin FIT SDK
   tags:
@@ -191,13 +200,14 @@ apis:
   - url: https://github.com/garmin/fit-sdk-tools
     name: FIT SDK Tools
     type: Tools
-  description: The Flexible and Interoperable Data Transfer (FIT) protocol is Garmin's compact binary file
-    format for sport, fitness, and health data — activities, courses, workouts, monitoring files, settings,
-    and more. The FIT SDK ships encoders and decoders in eight languages (C, C++, C#, Java, JavaScript,
-    Objective-C, Python, Swift), the FitCSVTool for binary-to-text inspection, FitGen.exe for profile
-    customization, and the canonical Profile.xlsx defining every FIT message and field. FIT is the de-facto
-    interchange format across Strava, TrainingPeaks, Komoot, Wahoo, Polar, Suunto, Apple Health, Google Fit,
-    and the entire endurance-sport tooling ecosystem.
+  description: The Flexible and Interoperable Data Transfer (FIT) protocol is Garmin's
+    compact binary file format for sport, fitness, and health data — activities, courses,
+    workouts, monitoring files, settings, and more. The FIT SDK ships encoders and
+    decoders in eight languages (C, C++, C#, Java, JavaScript, Objective-C, Python,
+    Swift), the FitCSVTool for binary-to-text inspection, FitGen.exe for profile customization,
+    and the canonical Profile.xlsx defining every FIT message and field. FIT is the
+    de-facto interchange format across Strava, TrainingPeaks, Komoot, Wahoo, Polar,
+    Suunto, Apple Health, Google Fit, and the entire endurance-sport tooling ecosystem.
 - aid: garmin:garmin-golf-api
   name: Garmin Golf API
   tags:
@@ -209,9 +219,10 @@ apis:
   properties:
   - url: https://developer.garmin.com/golf-api/overview/
     type: Documentation
-  description: Premium partner API exposing data from the Garmin Golf app — scorecard data (par, strokes
-    per hole, fairway hits, putts), Garmin launch monitor metrics (ball and club data from Approach R10/R50),
-    and per-shot GPS location and distance. Select-partner access, licensing fee, and approval required.
+  description: Premium partner API exposing data from the Garmin Golf app — scorecard
+    data (par, strokes per hole, fairway hits, putts), Garmin launch monitor metrics
+    (ball and club data from Approach R10/R50), and per-shot GPS location and distance.
+    Select-partner access, licensing fee, and approval required.
 - aid: garmin:garmin-navionics-marine-api
   name: Garmin Navionics Marine Charts and Maps
   tags:
@@ -230,10 +241,10 @@ apis:
   - url: https://developer.garmin.com/marine-charts/mobile-sdk/
     name: Navionics Mobile SDK
     type: SDK
-  description: Web API and iOS/Android mobile SDK for embedding Navionics marine cartography — HD contour
-    depth data, spot soundings, detailed shorelines, navigational objects, and SonarChart Live — into apps
-    and websites for sailing, fishing, diving, fleet management, regattas, and marine education. Charts
-    updated daily.
+  description: Web API and iOS/Android mobile SDK for embedding Navionics marine cartography
+    — HD contour depth data, spot soundings, detailed shorelines, navigational objects,
+    and SonarChart Live — into apps and websites for sailing, fishing, diving, fleet
+    management, regattas, and marine education. Charts updated daily.
 - aid: garmin:garmin-inreach-portal-connect
   name: Garmin inReach Portal Connect
   tags:
@@ -246,10 +257,10 @@ apis:
   properties:
   - url: https://developer.garmin.com/inreach-portal/
     type: Documentation
-  description: Enterprise API for organizations to integrate inReach satellite communicator data — two-way
-    messaging, location tracking, MapShare, SOS events — into their own dispatch, fleet, or safety platforms
-    via the Iridium satellite network. Used by emergency services, expedition operators, and field service
-    organizations.
+  description: Enterprise API for organizations to integrate inReach satellite communicator
+    data — two-way messaging, location tracking, MapShare, SOS events — into their
+    own dispatch, fleet, or safety platforms via the Iridium satellite network. Used
+    by emergency services, expedition operators, and field service organizations.
 - aid: garmin:garmin-ant-wireless
   name: Garmin ANT Wireless Network
   tags:
@@ -272,11 +283,11 @@ apis:
   - url: https://www.thisisant.com/developer/ant-plus/device-profiles
     name: ANT+ Device Profiles
     type: Documentation
-  description: Garmin (via dynastream) operates the ANT and ANT+ ultra-low-power 2.4GHz wireless protocol
-    used across cycling, running, fitness, and health sensors industry-wide. ANT+ device profiles define
-    standard interop classes (heart rate, power, speed/cadence, stride, bike trainer, blood pressure, weight
-    scale, indoor trainer FE-C) implemented by Wahoo, Polar, Suunto, Stages, SRM, Tacx, and most fitness
-    sensor vendors.
+  description: Garmin (via dynastream) operates the ANT and ANT+ ultra-low-power 2.4GHz
+    wireless protocol used across cycling, running, fitness, and health sensors industry-wide.
+    ANT+ device profiles define standard interop classes (heart rate, power, speed/cadence,
+    stride, bike trainer, blood pressure, weight scale, indoor trainer FE-C) implemented
+    by Wahoo, Polar, Suunto, Stages, SRM, Tacx, and most fitness sensor vendors.
 - aid: garmin:garmin-tacx-trainer-api
   name: Garmin Tacx Trainer Communication
   tags:
@@ -289,9 +300,9 @@ apis:
   properties:
   - url: https://developer.garmin.com/tacx-trainer/
     type: Documentation
-  description: Communication protocol documentation for controlling Tacx smart trainers (NEO, Flux, Boost
-    line) over ANT+ FE-C and Bluetooth FTMS for indoor cycling and virtual-ride apps (Zwift, TrainerRoad,
-    Rouvy, MyWhoosh, indieVelo).
+  description: Communication protocol documentation for controlling Tacx smart trainers
+    (NEO, Flux, Boost line) over ANT+ FE-C and Bluetooth FTMS for indoor cycling and
+    virtual-ride apps (Zwift, TrainerRoad, Rouvy, MyWhoosh, indieVelo).
 - aid: garmin:garmin-radar-data-ble
   name: Garmin Radar Data BLE Program
   tags:
@@ -304,9 +315,9 @@ apis:
   properties:
   - url: https://developer.garmin.com/radar-data-ble/
     type: Documentation
-  description: BLE GATT service that allows third-party head units, smartphones, and cycling-safety apps to
-    receive vehicle-approach data from Garmin Varia rearview radars (RTL515, RCT715) — vehicle count,
-    distance, and approach speed.
+  description: BLE GATT service that allows third-party head units, smartphones, and
+    cycling-safety apps to receive vehicle-approach data from Garmin Varia rearview
+    radars (RTL515, RCT715) — vehicle count, distance, and approach speed.
 - aid: garmin:garmin-flight-data-log-api
   name: Garmin Aviation Flight Data Log API
   tags:
@@ -318,9 +329,10 @@ apis:
   properties:
   - url: https://developer.garmin.com/flight-data-log/
     type: Documentation
-  description: Aviation API for accessing flight data logs (FDL/FDM) generated by Garmin avionics —
-    G1000/G3000/G5000 integrated flight decks and G500/G600 TXi displays — for fleet operators, training
-    organizations, and safety management programs.
+  description: Aviation API for accessing flight data logs (FDL/FDM) generated by
+    Garmin avionics — G1000/G3000/G5000 integrated flight decks and G500/G600 TXi
+    displays — for fleet operators, training organizations, and safety management
+    programs.
 - aid: garmin:garmin-fleet-management
   name: Garmin Fleet Management Platform
   tags:
@@ -332,9 +344,9 @@ apis:
   properties:
   - url: https://developer.garmin.com/fleet-management/
     type: Documentation
-  description: Developer integration for Garmin Fleet purpose-built truck and commercial vehicle navigators,
-    enabling dispatch, route, message, and stop integration between Garmin Fleet devices and third-party
-    fleet management software.
+  description: Developer integration for Garmin Fleet purpose-built truck and commercial
+    vehicle navigators, enabling dispatch, route, message, and stop integration between
+    Garmin Fleet devices and third-party fleet management software.
 - aid: garmin:garmin-custom-maps
   name: Garmin Custom Maps API
   tags:
@@ -346,9 +358,10 @@ apis:
   properties:
   - url: https://developer.garmin.com/custom-maps/
     type: Documentation
-  description: Specification for creating KMZ-based custom maps that load on Garmin outdoor handhelds and
-    fitness watches — used by parks, search-and-rescue teams, race organizers, and event operators to deliver
-    purpose-built raster maps to participants and personnel.
+  description: Specification for creating KMZ-based custom maps that load on Garmin
+    outdoor handhelds and fitness watches — used by parks, search-and-rescue teams,
+    race organizers, and event operators to deliver purpose-built raster maps to participants
+    and personnel.
 name: Garmin
 tags:
 - GPS
@@ -448,21 +461,30 @@ common:
   url: https://www.youtube.com/user/garmin
 - type: Features
   data:
-  - Connect IQ wearable application platform with Monkey C, device simulators, and VS Code extension (SDK 9.1.0)
-  - Five Connect IQ app types — watch faces, data fields, widgets, device apps, audio content providers
+  - Connect IQ wearable application platform with Monkey C, device simulators, and
+    VS Code extension (SDK 9.1.0)
+  - Five Connect IQ app types — watch faces, data fields, widgets, device apps, audio
+    content providers
   - Connect IQ Store at apps.garmin.com for app distribution and monetization
-  - Connect IQ Android SDK (Maven Central) and iOS Companion SDK for phone-to-watch communication
-  - Garmin Connect Developer Program cloud APIs — Health, Activity, Women's Health, Training, Courses
-  - Inbound APIs (Health, Activity, Women's Health) for receiving user data into partner platforms
+  - Connect IQ Android SDK (Maven Central) and iOS Companion SDK for phone-to-watch
+    communication
+  - Garmin Connect Developer Program cloud APIs — Health, Activity, Women's Health,
+    Training, Courses
+  - Inbound APIs (Health, Activity, Women's Health) for receiving user data into partner
+    platforms
   - Outbound APIs (Training, Courses) for pushing workouts and routes onto user devices
   - Garmin Health SDK — Standard (HIPAA-compliant) and Companion variants for iOS/Android
-  - Real-time BLE streaming of accelerometer, heart rate, pulse ox, respiration, stress, Body Battery
-  - FIT SDK in eight languages (C, C++, C#, Java, JavaScript, Objective-C, Python, Swift) — the industry
-    interchange format for endurance sport data
-  - FIT SDK Tools — FitCSVTool, FitGen, FitToolsUI for binary file inspection and profile customization
+  - Real-time BLE streaming of accelerometer, heart rate, pulse ox, respiration, stress,
+    Body Battery
+  - FIT SDK in eight languages (C, C++, C#, Java, JavaScript, Objective-C, Python,
+    Swift) — the industry interchange format for endurance sport data
+  - FIT SDK Tools — FitCSVTool, FitGen, FitToolsUI for binary file inspection and
+    profile customization
   - Navionics marine cartography Web API and iOS/Android mobile SDK
-  - inReach Portal Connect for satellite-messaging and tracking integrations over Iridium
-  - ANT and ANT+ ultra-low-power 2.4GHz wireless protocol with standardized device profiles
+  - inReach Portal Connect for satellite-messaging and tracking integrations over
+    Iridium
+  - ANT and ANT+ ultra-low-power 2.4GHz wireless protocol with standardized device
+    profiles
   - Garmin Golf API for scorecards, launch monitor metrics, and per-shot GPS data
   - Tacx smart trainer ANT+ FE-C and BLE FTMS communication protocols
   - Varia cycling radar BLE GATT service for third-party head units
@@ -482,13 +504,15 @@ common:
 created: '2026-05-25T00:00:00.000Z'
 modified: '2026-05-30'
 position: Producing
-description: Garmin is the global leader in GPS-enabled wearables, cycling computers, outdoor handhelds,
-  marine electronics, aviation avionics, and automotive navigation. Garmin's developer surface spans the
-  Connect IQ wearable app platform (Monkey C, watch faces, data fields, widgets, device apps), the Garmin
-  Connect Developer Program cloud APIs (Health, Activity, Women's Health, Training, Courses), the Health
-  SDK for direct BLE streaming from wearables, the FIT SDK that defines the industry's de-facto endurance
-  data interchange format, Navionics marine cartography, inReach satellite messaging, the ANT/ANT+ wireless
-  protocol, and specialized APIs for golf, aviation flight data, fleet telematics, and custom outdoor maps.
+description: Garmin is the global leader in GPS-enabled wearables, cycling computers,
+  outdoor handhelds, marine electronics, aviation avionics, and automotive navigation.
+  Garmin's developer surface spans the Connect IQ wearable app platform (Monkey C,
+  watch faces, data fields, widgets, device apps), the Garmin Connect Developer Program
+  cloud APIs (Health, Activity, Women's Health, Training, Courses), the Health SDK
+  for direct BLE streaming from wearables, the FIT SDK that defines the industry's
+  de-facto endurance data interchange format, Navionics marine cartography, inReach
+  satellite messaging, the ANT/ANT+ wireless protocol, and specialized APIs for golf,
+  aviation flight data, fleet telematics, and custom outdoor maps.
 maintainers:
 - FN: Kin Lane
   email: info@apievangelist.com

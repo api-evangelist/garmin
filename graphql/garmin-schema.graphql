@@ -1,0 +1,1020 @@
+"""
+Garmin Connect GraphQL Schema
+Conceptual schema modelling the Garmin Connect platform health, fitness, activity,
+training, device, and social data surfaces. Derived from the Garmin Connect Health API,
+Activity API, Training API, Courses API, Health SDK, and FIT SDK data models.
+"""
+
+scalar DateTime
+scalar Date
+
+# ---------------------------------------------------------------------------
+# Root Types
+# ---------------------------------------------------------------------------
+
+type Query {
+  userProfile(userId: ID!): UserProfile
+  user(userId: ID!): User
+  dailyActivities(userId: ID!, startDate: Date!, endDate: Date!): [DailyActivities!]!
+  steps(userId: ID!, date: Date!): Steps
+  distance(userId: ID!, date: Date!): Distance
+  calories(userId: ID!, date: Date!): Calories
+  activeMinutes(userId: ID!, date: Date!): ActiveMinutes
+  hrv(userId: ID!, date: Date!): HRV
+  heartRate(userId: ID!, date: Date!): HeartRate
+  heartRateZones(userId: ID!): [HeartRateZone!]!
+  bodyBattery(userId: ID!, date: Date!): BodyBattery
+  stressLevel(userId: ID!, date: Date!): StressLevel
+  sleep(userId: ID!, date: Date!): Sleep
+  spo2(userId: ID!, date: Date!): SpO2
+  pulseOxData(userId: ID!, date: Date!): PulseOxData
+  bodyComposition(userId: ID!, date: Date!): BodyComposition
+  weight(userId: ID!, date: Date!): Weight
+  bmi(userId: ID!): BMI
+  bodyFat(userId: ID!, date: Date!): BodyFat
+  activities(userId: ID!, limit: Int, offset: Int, startDate: Date, endDate: Date): [Activity!]!
+  activity(activityId: ID!): Activity
+  segmentResults(activityId: ID!): [SegmentResults!]!
+  trainingStatus(userId: ID!): TrainingStatus
+  trainingReadiness(userId: ID!, date: Date!): TrainingReadiness
+  performance(activityId: ID!): Performance
+  vo2Max(userId: ID!): VO2Max
+  ftpScore(userId: ID!): FTPScore
+  gear(userId: ID!): [Gear!]!
+  device(deviceId: ID!): Device
+  devices(userId: ID!): [Device!]!
+  syncSessions(deviceId: ID!, limit: Int): [SyncSession!]!
+  workouts(userId: ID!, limit: Int): [Workout!]!
+  workout(workoutId: ID!): Workout
+  workoutHistory(userId: ID!, limit: Int): [WorkoutHistory!]!
+  calendar(userId: ID!, startDate: Date!, endDate: Date!): Calendar
+  courses(userId: ID!): [Course!]!
+  course(courseId: ID!): Course
+  goals(userId: ID!): [Goal!]!
+  challenges(userId: ID!): [Challenge!]!
+  challengeStatus(userId: ID!, challengeId: ID!): ChallengeStatus
+  leaderboard(challengeId: ID!, limit: Int): Leaderboard
+  achievements(userId: ID!): [Achievement!]!
+  badges(userId: ID!): [Badge!]!
+  userSettings(userId: ID!): [UserSetting!]!
+}
+
+type Mutation {
+  pushWorkout(userId: ID!, workout: WorkoutInput!): Workout
+  pushCourse(userId: ID!, course: CourseInput!): Course
+  updateUserSetting(userId: ID!, setting: UserSettingInput!): UserSetting
+  logWeight(userId: ID!, weight: WeightInput!): Weight
+  createGoal(userId: ID!, goal: GoalInput!): Goal
+  updateGoal(goalId: ID!, goal: GoalInput!): Goal
+  deleteGoal(goalId: ID!): Boolean
+}
+
+# ---------------------------------------------------------------------------
+# User and Profile
+# ---------------------------------------------------------------------------
+
+"""Core account entity linking to profile, health, activity, and device data."""
+type User {
+  id: ID!
+  profile: UserProfile
+  devices: [Device!]!
+  goals: [Goal!]!
+  achievements: [Achievement!]!
+  settings: [UserSetting!]!
+  createdAt: DateTime!
+}
+
+"""Garmin Connect user identity, display preferences, and connectivity."""
+type UserProfile {
+  id: ID!
+  displayName: String!
+  firstName: String
+  lastName: String
+  profileImageUrl: String
+  location: String
+  locale: String
+  joinDate: Date
+  gender: String
+  birthdate: Date
+  measurementSystem: String
+  heartRateZones: [HeartRateZone!]!
+  vo2Max: VO2Max
+  user: User
+}
+
+"""Named user preference or configuration value."""
+type UserSetting {
+  id: ID!
+  name: String!
+  value: String!
+  dataType: String
+  updatedAt: DateTime
+}
+
+# ---------------------------------------------------------------------------
+# Daily Wellness Summaries
+# ---------------------------------------------------------------------------
+
+"""All-day wellness summary for a single calendar date."""
+type DailyActivities {
+  id: ID!
+  userId: ID!
+  calendarDate: Date!
+  steps: Steps
+  distance: Distance
+  calories: Calories
+  activeMinutes: ActiveMinutes
+  floorsClimbed: Int
+  floorsDescended: Int
+  intensityMinutesGoal: Int
+  moderateIntensityMinutes: Int
+  vigorousIntensityMinutes: Int
+  restingHeartRate: Int
+  averageStressLevel: Int
+  stressQualifier: String
+  bodyBattery: BodyBattery
+  startTimeGmt: DateTime
+  endTimeGmt: DateTime
+}
+
+"""Step count data for a day with epoch-level resolution."""
+type Steps {
+  date: Date!
+  totalSteps: Int!
+  goalSteps: Int
+  stepGoalAchieved: Boolean
+  averageDailySteps: Int
+  epochs: [StepEpoch!]!
+}
+
+"""Step count observation within a sub-daily time window."""
+type StepEpoch {
+  startTime: DateTime!
+  endTime: DateTime!
+  steps: Int!
+  pushes: Int
+  activityType: String
+  activityLevel: String
+}
+
+"""Cumulative distance tracked by the device for a given period."""
+type Distance {
+  date: Date!
+  totalDistanceMeters: Float!
+  totalDistanceKilometers: Float
+  totalDistanceMiles: Float
+}
+
+"""Calorie burn breakdown for a day."""
+type Calories {
+  date: Date!
+  totalKilocalories: Float!
+  activeKilocalories: Float!
+  bmrKilocalories: Float!
+  wellnessKilocalories: Float
+  consumedCalories: Float
+}
+
+"""Intensity minutes accumulated toward weekly physical activity guidelines."""
+type ActiveMinutes {
+  date: Date!
+  moderateMinutes: Int!
+  vigorousMinutes: Int!
+  weeklyModerateGoal: Int
+  weeklyVigorousGoal: Int
+  weeklyModerateTotal: Int
+  weeklyVigorousTotal: Int
+}
+
+# ---------------------------------------------------------------------------
+# Heart Rate
+# ---------------------------------------------------------------------------
+
+"""Daily heart rate summary with intraday readings."""
+type HeartRate {
+  date: Date!
+  restingHeartRate: Int
+  minHeartRate: Int
+  maxHeartRate: Int
+  lastSevenDaysAvgRestingHeartRate: Int
+  readings: [HeartRateReading!]!
+}
+
+"""Single heart rate measurement at a point in time."""
+type HeartRateReading {
+  timestamp: DateTime!
+  bpm: Int!
+  source: String
+}
+
+"""Named heart rate training zone with bpm boundaries and training time."""
+type HeartRateZone {
+  zoneNumber: Int!
+  zoneName: String!
+  minBpm: Int!
+  maxBpm: Int!
+  timeInZoneSeconds: Int
+  percentMaxHr: Float
+}
+
+# ---------------------------------------------------------------------------
+# HRV and Stress
+# ---------------------------------------------------------------------------
+
+"""Heart rate variability nightly summary and trend."""
+type HRV {
+  date: Date!
+  weeklyAverage: Float
+  lastNightAverage: Float
+  lastNightFiveMinutesHigh: Float
+  baseline: HRVBaseline
+  status: String
+  feedback: String
+  readings: [HRVReading!]!
+}
+
+"""Individual HRV reading captured during an overnight measurement window."""
+type HRVReading {
+  hrv5MinuteHigh: Float!
+  startTimestampLocal: DateTime
+  endTimestampLocal: DateTime
+  startTimestampGmt: DateTime
+  endTimestampGmt: DateTime
+}
+
+"""Rolling HRV baseline values used for status classification."""
+type HRVBaseline {
+  lowUpper: Float
+  balancedLow: Float
+  balancedUpper: Float
+  markerValue: Float
+}
+
+"""Intraday stress score derived from HRV analysis."""
+type StressLevel {
+  date: Date!
+  overallStressLevel: Int
+  restStressDuration: Int
+  lowStressDuration: Int
+  mediumStressDuration: Int
+  highStressDuration: Int
+  stressChartValueOffset: Int
+  stressChartYAxisOrigin: Int
+  readings: [StressReading!]!
+}
+
+"""Stress level observation at a specific time."""
+type StressReading {
+  timestamp: DateTime!
+  stressLevel: Int!
+  qualifier: String
+}
+
+# ---------------------------------------------------------------------------
+# Body Battery
+# ---------------------------------------------------------------------------
+
+"""Garmin Body Battery energy reserve metric with intraday readings."""
+type BodyBattery {
+  date: Date!
+  startValue: Int
+  endValue: Int
+  minValue: Int
+  maxValue: Int
+  readings: [BodyBatteryReading!]!
+}
+
+"""Single Body Battery level observation."""
+type BodyBatteryReading {
+  timestamp: DateTime!
+  level: Int!
+  status: String
+}
+
+# ---------------------------------------------------------------------------
+# Sleep
+# ---------------------------------------------------------------------------
+
+"""Full sleep session record for a night."""
+type Sleep {
+  id: ID!
+  userId: ID!
+  calendarDate: Date!
+  sleepStartTimestampGmt: DateTime!
+  sleepEndTimestampGmt: DateTime!
+  sleepStartTimestampLocal: DateTime!
+  sleepEndTimestampLocal: DateTime!
+  unmeasurableSleepSeconds: Int
+  deepSleepSeconds: Int!
+  lightSleepSeconds: Int!
+  remSleepSeconds: Int!
+  awakeSleepSeconds: Int!
+  averageSpO2Value: Float
+  lowestSpO2Value: Float
+  highestSpO2Value: Float
+  averageRespirationValue: Float
+  lowestRespirationValue: Float
+  highestRespirationValue: Float
+  averageHeartRateValue: Int
+  lowestHeartRateValue: Int
+  score: SleepScore
+  stages: [SleepStage!]!
+  movement: [SleepMovement!]!
+}
+
+"""Sleep quality composite score with component subscores."""
+type SleepScore {
+  value: Int!
+  qualifier: String
+  optimalStart: DateTime
+  optimalEnd: DateTime
+  feedbackPhrase: String
+  components: SleepScoreComponents
+}
+
+"""Component subscores contributing to the overall SleepScore."""
+type SleepScoreComponents {
+  totalDuration: SleepScoreComponent
+  stress: SleepScoreComponent
+  awakeCount: SleepScoreComponent
+  remPercentage: SleepScoreComponent
+  restlessness: SleepScoreComponent
+  lightPercentage: SleepScoreComponent
+  deepPercentage: SleepScoreComponent
+}
+
+"""Individual subscore within SleepScoreComponents."""
+type SleepScoreComponent {
+  qualifyingScore: Int
+  optimalStart: Float
+  optimalEnd: Float
+  idealStartInSeconds: Float
+  idealEndInSeconds: Float
+}
+
+"""Classified sleep phase segment within a sleep session."""
+type SleepStage {
+  startGmt: DateTime!
+  endGmt: DateTime!
+  activityLevel: String!
+}
+
+"""Movement intensity epoch captured during a sleep session."""
+type SleepMovement {
+  startGmt: DateTime!
+  endGmt: DateTime!
+  activityLevel: Float!
+}
+
+# ---------------------------------------------------------------------------
+# Pulse Oximetry
+# ---------------------------------------------------------------------------
+
+"""Single SpO2 blood oxygen saturation reading."""
+type SpO2 {
+  timestamp: DateTime!
+  spO2Value: Float!
+  confidenceLevel: Int
+  mode: String
+}
+
+"""Continuous overnight or on-demand SpO2 measurement series."""
+type PulseOxData {
+  date: Date!
+  startTimestampLocal: DateTime!
+  endTimestampLocal: DateTime!
+  averageSpO2: Float
+  lowestSpO2: Float
+  highestSpO2: Float
+  readings: [SpO2!]!
+}
+
+# ---------------------------------------------------------------------------
+# Body Composition
+# ---------------------------------------------------------------------------
+
+"""Comprehensive body composition measurement."""
+type BodyComposition {
+  date: Date!
+  weight: Weight
+  bmi: BMI
+  bodyFat: BodyFat
+  skeletalMuscleMassKg: Float
+  boneMassKg: Float
+  bodyWaterPercentage: Float
+  muscleMassKg: Float
+  physiqueRating: Int
+  visceralFat: Float
+  metabolicAge: Int
+}
+
+"""Single body weight measurement."""
+type Weight {
+  date: Date!
+  timestamp: DateTime!
+  weightKg: Float!
+  weightLbs: Float
+  bmi: Float
+  source: String
+}
+
+"""Calculated body mass index."""
+type BMI {
+  value: Float!
+  category: String!
+  date: Date!
+}
+
+"""Body fat percentage measurement."""
+type BodyFat {
+  date: Date!
+  timestamp: DateTime!
+  percentage: Float!
+  method: String
+}
+
+# ---------------------------------------------------------------------------
+# Activities
+# ---------------------------------------------------------------------------
+
+"""Recorded sport or fitness activity session."""
+type Activity {
+  id: ID!
+  userId: ID!
+  activityName: String!
+  activityType: ActivityType!
+  startTimeLocal: DateTime!
+  startTimeGmt: DateTime!
+  elapsedDuration: Float!
+  movingDuration: Float
+  distanceMeters: Float
+  averageSpeed: Float
+  maxSpeed: Float
+  calories: Float
+  bmrCalories: Float
+  averageHr: Int
+  maxHr: Int
+  averageRunningCadence: Float
+  maxRunningCadence: Float
+  averageBikingCadence: Float
+  maxBikingCadence: Float
+  steps: Int
+  strokes: Int
+  averagePower: Float
+  maxPower: Float
+  normalizedPower: Float
+  totalElevationGain: Float
+  totalElevationLoss: Float
+  minElevation: Float
+  maxElevation: Float
+  trainingEffect: Float
+  anaerobicTrainingEffect: Float
+  aerobicTrainingEffectMessage: String
+  anaerobicTrainingEffectMessage: String
+  vO2MaxValue: Float
+  lactateThresholdBpm: Float
+  lactateThresholdSpeed: Float
+  fitFilePath: String
+  device: ActivityDevice
+  laps: [ActivityLap!]!
+  splits: [ActivitySplit!]!
+  route: Route
+  performance: Performance
+  heartRateZones: [HeartRateZone!]!
+  gear: [Gear!]!
+}
+
+"""Activity type classification."""
+type ActivityType {
+  typeId: Int!
+  typeKey: String!
+  parentTypeId: Int
+  displayOrder: Int
+  sortOrder: Int
+}
+
+"""Auto-detected or manually triggered lap within an activity."""
+type ActivityLap {
+  lapIndex: Int!
+  startTimeLocal: DateTime!
+  elapsedDuration: Float!
+  movingDuration: Float
+  distanceMeters: Float!
+  averageSpeed: Float
+  maxSpeed: Float
+  averageHr: Int
+  maxHr: Int
+  calories: Float
+  averageCadence: Float
+  maxCadence: Float
+  totalElevationGain: Float
+  totalElevationLoss: Float
+  lapTrigger: String
+}
+
+"""Distance-based performance split within an activity."""
+type ActivitySplit {
+  splitIndex: Int!
+  splitType: String!
+  distanceMeters: Float!
+  elapsedDuration: Float!
+  averageSpeed: Float
+  averageHr: Int
+  averageCadence: Float
+  elevationGain: Float
+  elevationLoss: Float
+}
+
+"""Garmin device that recorded the activity."""
+type ActivityDevice {
+  id: ID!
+  deviceId: ID!
+  deviceName: String!
+  deviceFirmwareVersion: String
+}
+
+# ---------------------------------------------------------------------------
+# Routes and Courses
+# ---------------------------------------------------------------------------
+
+"""GPS track associated with an activity or standalone course."""
+type Route {
+  id: ID!
+  activityId: ID
+  courseId: ID
+  name: String
+  description: String
+  distanceMeters: Float
+  elevationGainMeters: Float
+  elevationLossMeters: Float
+  maxElevation: Float
+  minElevation: Float
+  points: [RoutePoint!]!
+}
+
+"""Individual GPS trackpoint with sensor data."""
+type RoutePoint {
+  sequence: Int!
+  latitude: Float!
+  longitude: Float!
+  altitude: Float
+  timestamp: DateTime!
+  heartRate: Int
+  cadence: Int
+  speed: Float
+  power: Float
+  distance: Float
+  temperature: Float
+}
+
+"""Pre-planned GPS course for device navigation."""
+type Course {
+  id: ID!
+  userId: ID!
+  courseName: String!
+  courseType: String
+  distanceMeters: Float!
+  elevationGainMeters: Float
+  elevationLossMeters: Float
+  description: String
+  isLoop: Boolean
+  createdDate: DateTime
+  updatedDate: DateTime
+  route: Route
+  waypoints: [Waypoint!]!
+}
+
+"""Named waypoint along a course."""
+type Waypoint {
+  sequence: Int!
+  name: String!
+  latitude: Float!
+  longitude: Float!
+  altitude: Float
+  category: String
+  symbol: String
+}
+
+"""Leaderboard result for a user on a defined GPS segment."""
+type SegmentResults {
+  segmentId: ID!
+  segmentName: String!
+  activityId: ID!
+  startPosition: Int
+  endPosition: Int
+  distanceMeters: Float
+  elapsedTime: Float
+  averageHr: Int
+  rank: Int
+  personalRecord: Boolean
+}
+
+# ---------------------------------------------------------------------------
+# Training and Performance
+# ---------------------------------------------------------------------------
+
+"""Current training load summary and balance metrics."""
+type TrainingStatus {
+  userId: ID!
+  date: Date!
+  trainingStatusValue: String
+  trainingStatusFeedback: String
+  trainingLoad7Days: Float
+  trainingLoadOptimalLow: Float
+  trainingLoadOptimalHigh: Float
+  aerobicTrainingLoad: Float
+  anaerobicTrainingLoad: Float
+  loadFocus: TrainingLoadFocus
+  acuteLoad: Float
+  chronicLoad: Float
+  acuteChronicWorkloadRatio: Float
+  recoveryTime: Int
+  performanceCondition: Int
+}
+
+"""Training load distribution across intensity zones."""
+type TrainingLoadFocus {
+  lowAerobicSeconds: Float
+  highAerobicSeconds: Float
+  anaerobicSeconds: Float
+  lowAerobicEffect: Float
+  highAerobicEffect: Float
+  anaerobicEffect: Float
+}
+
+"""Pre-session readiness score with contributing factors."""
+type TrainingReadiness {
+  date: Date!
+  score: Int!
+  qualifier: String!
+  sleepScore: Int
+  recoveryScore: Int
+  hvbScore: Int
+  acuteLoad: Float
+  trainingStatusFeedback: String
+  components: TrainingReadinessComponents
+}
+
+"""Component subscores used to calculate the TrainingReadiness score."""
+type TrainingReadinessComponents {
+  sleepQuality: TrainingReadinessComponent
+  recoveryTime: TrainingReadinessComponent
+  hrv: TrainingReadinessComponent
+  acuteLoad: TrainingReadinessComponent
+}
+
+"""Individual readiness factor score and qualifier."""
+type TrainingReadinessComponent {
+  value: Int
+  qualifier: String
+}
+
+"""Activity-level performance metrics."""
+type Performance {
+  activityId: ID!
+  aerobicTrainingEffect: Float
+  anaerobicTrainingEffect: Float
+  aerobicTrainingEffectLabel: String
+  anaerobicTrainingEffectLabel: String
+  performanceConditionStart: Int
+  performanceConditionEnd: Int
+  normalizedPower: Float
+  intensityFactor: Float
+  trainingStressScore: Float
+  lactateThresholdHeartRate: Int
+  lactateThresholdSpeed: Float
+}
+
+"""Estimated VO2Max fitness level."""
+type VO2Max {
+  userId: ID!
+  date: Date!
+  runningVO2Max: Float
+  cyclingVO2Max: Float
+  fitnessAge: Int
+  fitnessAgeDescription: String
+  runningPercentile: Float
+  cyclingPercentile: Float
+}
+
+"""Functional Threshold Power estimate for cycling."""
+type FTPScore {
+  userId: ID!
+  date: Date!
+  ftp: Int!
+  ftpAsPercentOfBestPower: Float
+  maxFtp: Int
+  calculationMethod: String
+}
+
+# ---------------------------------------------------------------------------
+# Devices and Gear
+# ---------------------------------------------------------------------------
+
+"""Garmin wearable or device registered to a user account."""
+type Device {
+  id: ID!
+  userId: ID!
+  deviceId: String!
+  displayName: String!
+  productDisplayName: String
+  partNumber: String
+  imageUrl: String
+  unitId: Int
+  type: String
+  currentFirmwareVersion: String
+  availableFirmwareVersion: String
+  lastSyncTime: DateTime
+  registrationDate: Date
+  batteryLevel: Float
+  batteryStatus: String
+  info: DeviceInfo
+  sensors: [DeviceSensor!]!
+  syncSessions: [SyncSession!]!
+}
+
+"""Technical specifications and status for a Device."""
+type DeviceInfo {
+  deviceId: ID!
+  firmwareVersion: String!
+  primaryColorHex: String
+  secondaryColorHex: String
+  tertiaryCplorHex: String
+  displayWidth: Int
+  displayHeight: Int
+  touchscreen: Boolean
+  gpsCapable: Boolean
+  batteryType: String
+  chargeable: Boolean
+  deviceSoftwareVersion: String
+  applicationSoftwareVersion: String
+}
+
+"""Sensor capability reported by a Garmin device."""
+type DeviceSensor {
+  sensorType: String!
+  available: Boolean!
+  enabled: Boolean
+  resolution: Float
+  samplingRateHz: Float
+}
+
+"""Record of a completed device-to-cloud synchronization event."""
+type SyncSession {
+  id: ID!
+  deviceId: ID!
+  syncStartTime: DateTime!
+  syncEndTime: DateTime
+  syncMethod: String!
+  filesTransferred: Int
+  activitiesUploaded: Int
+  success: Boolean!
+}
+
+"""Wearable or equipment item tracked for maintenance and usage."""
+type Gear {
+  id: ID!
+  userId: ID!
+  displayName: String!
+  customMakeModel: String
+  gearTypeName: String
+  imageNameKind: String
+  dateBegin: Date
+  dateEnd: Date
+  maximumMeters: Float
+  notified: Boolean
+  currentMeters: Float
+  totalActivities: Int
+  createDate: DateTime
+  updateDate: DateTime
+}
+
+# ---------------------------------------------------------------------------
+# Workouts and Training Plans
+# ---------------------------------------------------------------------------
+
+"""Structured workout definition to be pushed to a Garmin device."""
+type Workout {
+  id: ID!
+  userId: ID!
+  workoutName: String!
+  sport: String!
+  estimatedDurationSeconds: Int
+  estimatedDistanceMeters: Float
+  poolLength: Float
+  unitOfPoolLength: String
+  createdDate: DateTime
+  updatedDate: DateTime
+  exercises: [WorkoutExercise!]!
+}
+
+"""Individual step or exercise within a structured Workout."""
+type WorkoutExercise {
+  stepOrder: Int!
+  stepType: String!
+  exerciseName: String
+  targetType: String
+  targetValueLow: Float
+  targetValueHigh: Float
+  durationValue: Float
+  durationUnit: String
+  repeatCount: Int
+  description: String
+  category: String
+}
+
+"""Completed execution record of a Workout linked to an Activity."""
+type WorkoutHistory {
+  id: ID!
+  workoutId: ID!
+  activityId: ID!
+  userId: ID!
+  completedDate: DateTime!
+  workoutName: String!
+  sport: String!
+  activity: Activity
+}
+
+"""Training calendar with scheduled workout and race events."""
+type Calendar {
+  userId: ID!
+  startDate: Date!
+  endDate: Date!
+  events: [CalendarEvent!]!
+}
+
+"""A single event on the training calendar."""
+type CalendarEvent {
+  id: ID!
+  calendarDate: Date!
+  eventType: String!
+  title: String!
+  workout: Workout
+  activityType: ActivityType
+  duration: Float
+  distance: Float
+}
+
+# ---------------------------------------------------------------------------
+# Goals and Social
+# ---------------------------------------------------------------------------
+
+"""User-defined wellness or performance goal."""
+type Goal {
+  id: ID!
+  userId: ID!
+  goalType: String!
+  targetValue: Float!
+  currentValue: Float
+  startDate: Date!
+  endDate: Date
+  active: Boolean!
+  completed: Boolean!
+  createdDate: DateTime
+}
+
+"""Community or partner fitness challenge."""
+type Challenge {
+  id: ID!
+  challengeName: String!
+  description: String
+  challengeType: String
+  targetMetric: String
+  targetValue: Float
+  startDate: Date!
+  endDate: Date!
+  participantCount: Int
+  imageUrl: String
+  createdDate: DateTime
+}
+
+"""A user's participation status in a Challenge."""
+type ChallengeStatus {
+  challengeId: ID!
+  userId: ID!
+  currentValue: Float!
+  targetValue: Float!
+  completionPercentage: Float
+  rank: Int
+  completed: Boolean!
+  joinDate: DateTime
+}
+
+"""Ranked list of participant entries for a Challenge."""
+type Leaderboard {
+  challengeId: ID!
+  challengeName: String!
+  totalParticipants: Int!
+  lastUpdated: DateTime
+  entries: [LeaderboardEntry!]!
+}
+
+"""Individual user ranking within a Leaderboard."""
+type LeaderboardEntry {
+  rank: Int!
+  userId: ID!
+  displayName: String!
+  profileImageUrl: String
+  progressValue: Float!
+  metricUnit: String
+  completionPercentage: Float
+}
+
+"""Milestone or accomplishment earned by a user."""
+type Achievement {
+  id: ID!
+  userId: ID!
+  achievementType: String!
+  title: String!
+  description: String
+  earnedDate: DateTime!
+  badge: Badge
+}
+
+"""Visual award asset associated with an Achievement."""
+type Badge {
+  id: ID!
+  badgeName: String!
+  badgePoints: Int
+  imageUrl: String!
+  badgeCategory: String
+  earnedDate: DateTime
+  shareUrl: String
+}
+
+# ---------------------------------------------------------------------------
+# Input Types
+# ---------------------------------------------------------------------------
+
+"""Input for pushing a structured workout to a user's device."""
+input WorkoutInput {
+  workoutName: String!
+  sport: String!
+  estimatedDurationSeconds: Int
+  estimatedDistanceMeters: Float
+  exercises: [WorkoutExerciseInput!]!
+}
+
+"""Input for a single exercise step within a WorkoutInput."""
+input WorkoutExerciseInput {
+  stepOrder: Int!
+  stepType: String!
+  exerciseName: String
+  targetType: String
+  targetValueLow: Float
+  targetValueHigh: Float
+  durationValue: Float
+  durationUnit: String
+  repeatCount: Int
+  description: String
+}
+
+"""Input for pushing a GPS course to a user's device."""
+input CourseInput {
+  courseName: String!
+  courseType: String
+  description: String
+  isLoop: Boolean
+  points: [RoutePointInput!]!
+  waypoints: [WaypointInput!]
+}
+
+"""Input for a single route trackpoint."""
+input RoutePointInput {
+  sequence: Int!
+  latitude: Float!
+  longitude: Float!
+  altitude: Float
+}
+
+"""Input for a course waypoint."""
+input WaypointInput {
+  sequence: Int!
+  name: String!
+  latitude: Float!
+  longitude: Float!
+  altitude: Float
+  category: String
+  symbol: String
+}
+
+"""Input for updating a user setting."""
+input UserSettingInput {
+  name: String!
+  value: String!
+}
+
+"""Input for logging a manual body weight entry."""
+input WeightInput {
+  weightKg: Float!
+  timestamp: DateTime!
+  bmi: Float
+}
+
+"""Input for creating or updating a wellness goal."""
+input GoalInput {
+  goalType: String!
+  targetValue: Float!
+  startDate: Date!
+  endDate: Date
+}
