@@ -16,7 +16,7 @@ apis:
     type: Documentation
   - url: https://developer.garmin.com/connect-iq/sdk/
     name: Connect IQ SDK
-    type: SDK
+    type: SDKs
   - url: https://developer.garmin.com/connect-iq/api-docs/
     name: Connect IQ API Docs
     type: Documentation
@@ -31,13 +31,13 @@ apis:
     type: AppMarketplace
   - url: https://github.com/garmin/connectiq-apps
     name: Connect IQ Apps Samples
-    type: SDK
+    type: SDKs
   - url: https://github.com/garmin/connectiq-android-sdk
     name: Connect IQ Mobile SDK for Android
-    type: SDK
+    type: SDKs
   - url: https://github.com/garmin/connectiq-companion-app-sdk-ios
     name: Connect IQ Companion App SDK for iOS
-    type: SDK
+    type: SDKs
   - url: graphql/garmin-graphql.md
     type: GraphQL
   description: Connect IQ is Garmin's open platform for building wearable apps that
@@ -145,10 +145,10 @@ apis:
     type: Documentation
   - url: https://developer.garmin.com/health-sdk/companion-sdk/
     name: Companion SDK
-    type: SDK
+    type: SDKs
   - url: https://developer.garmin.com/health-sdk/standard-sdk/
     name: Standard SDK
-    type: SDK
+    type: SDKs
   description: Mobile SDKs for iOS and Android that pair directly with Garmin wearables
     over BLE and stream raw real-time sensor data — accelerometer, heart rate, pulse
     ox, respiration, stress, calories, steps, Body Battery, and device battery — plus
@@ -175,28 +175,28 @@ apis:
     type: Documentation
   - url: https://github.com/garmin/fit-python-sdk
     name: FIT Python SDK
-    type: SDK
+    type: SDKs
   - url: https://github.com/garmin/fit-javascript-sdk
     name: FIT JavaScript SDK
-    type: SDK
+    type: SDKs
   - url: https://github.com/garmin/fit-java-sdk
     name: FIT Java SDK
-    type: SDK
+    type: SDKs
   - url: https://github.com/garmin/fit-c-sdk
     name: FIT C SDK
-    type: SDK
+    type: SDKs
   - url: https://github.com/garmin/fit-cpp-sdk
     name: FIT C++ SDK
-    type: SDK
+    type: SDKs
   - url: https://github.com/garmin/fit-csharp-sdk
     name: FIT C# SDK
-    type: SDK
+    type: SDKs
   - url: https://github.com/garmin/fit-swift-sdk
     name: FIT Swift SDK
-    type: SDK
+    type: SDKs
   - url: https://github.com/garmin/fit-objective-c-sdk
     name: FIT Objective-C SDK
-    type: SDK
+    type: SDKs
   - url: https://github.com/garmin/fit-sdk-tools
     name: FIT SDK Tools
     type: Tools
@@ -240,7 +240,7 @@ apis:
     type: Documentation
   - url: https://developer.garmin.com/marine-charts/mobile-sdk/
     name: Navionics Mobile SDK
-    type: SDK
+    type: SDKs
   description: Web API and iOS/Android mobile SDK for embedding Navionics marine cartography
     — HD contour depth data, spot soundings, detailed shorelines, navigational objects,
     and SonarChart Live — into apps and websites for sailing, fishing, diving, fleet
@@ -390,10 +390,10 @@ common:
   name: Connect IQ Documentation
 - type: GitHubOrganization
   url: https://github.com/garmin
-- type: Forum
+- type: Forums
   url: https://forums.garmin.com/developer/
   name: Garmin Developer Forums
-- type: SignUp
+- type: Signup
   url: https://developer.garmin.com/gc-developer-program/overview/
   name: Garmin Connect Developer Program Application
 - type: AppMarketplace
@@ -402,37 +402,37 @@ common:
 - type: StatusPage
   url: https://connect.garmin.com/status/
   name: Garmin Connect Status
-- type: SDK
+- type: SDKs
   url: https://github.com/garmin/connectiq-apps
   name: Connect IQ Apps (Monkey C samples)
-- type: SDK
+- type: SDKs
   url: https://github.com/garmin/connectiq-android-sdk
   name: Connect IQ Android SDK
-- type: SDK
+- type: SDKs
   url: https://github.com/garmin/connectiq-companion-app-sdk-ios
   name: Connect IQ iOS Companion SDK
-- type: SDK
+- type: SDKs
   url: https://github.com/garmin/fit-python-sdk
   name: FIT Python SDK
-- type: SDK
+- type: SDKs
   url: https://github.com/garmin/fit-javascript-sdk
   name: FIT JavaScript SDK
-- type: SDK
+- type: SDKs
   url: https://github.com/garmin/fit-java-sdk
   name: FIT Java SDK
-- type: SDK
+- type: SDKs
   url: https://github.com/garmin/fit-c-sdk
   name: FIT C SDK
-- type: SDK
+- type: SDKs
   url: https://github.com/garmin/fit-cpp-sdk
   name: FIT C++ SDK
-- type: SDK
+- type: SDKs
   url: https://github.com/garmin/fit-csharp-sdk
   name: FIT C# SDK
-- type: SDK
+- type: SDKs
   url: https://github.com/garmin/fit-swift-sdk
   name: FIT Swift SDK
-- type: SDK
+- type: SDKs
   url: https://github.com/garmin/fit-objective-c-sdk
   name: FIT Objective-C SDK
 - type: Tools
