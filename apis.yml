@@ -6,6 +6,13 @@ apis:
   tags:
   - Wearables
   - Watch Faces
+  - Application
+  - Connect IQ
+  - Monkey C
+  - SDK
+  tags_raw:
+  - Wearables
+  - Watch Faces
   - Apps
   - Connect IQ
   - Monkey C
