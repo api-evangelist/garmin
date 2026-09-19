@@ -345,6 +345,11 @@ apis:
   tags:
   - Fleet
   - GPS
+  - Vehicles
+  - Telematics
+  tags_raw:
+  - Fleet
+  - GPS
   - Vehicle
   - Telematics
   humanURL: https://developer.garmin.com/fleet-management/
