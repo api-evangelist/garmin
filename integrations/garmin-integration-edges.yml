@@ -158,6 +158,51 @@ edges:
   apps:
   - Garmin Health Sync
   - Garmin Connect
+- partner_name: FMCSA registered Electronic Logging Devices (self-certified ELD list + revoked devices)
+  partner: null
+  partner_match: register
+  type: register
+  channel: regulator-register
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://eld.fmcsa.dot.gov/List/Index
+  category: US FMCSA Electronic Logging Device registration (hours of service)
+  contract_reference:
+    register: FMCSA registered Electronic Logging Devices (self-certified ELD list + revoked devices)
+    standard: FMCSA ELD technical specifications (49 CFR Part 395 Subpart B, Appendix A)
+    spec_file: null
+    role: eld-manufacturer
+    registered_name: Garmin International
+    matched_domain: garmin.com
+    matched_by: domain
+    eld_status: active
+    certified_products:
+    - product: Electronic Logging Device
+      product_type: Electronic Logging Device
+      standard: FMCSA ELD technical specifications (49 CFR Part 395 Subpart B, Appendix A)
+      lapsed: false
+      self_certified: true
+    devices:
+    - device: Garmin eLog
+      model: GE1I01
+      eld_identifier: GE1I01
+      status: active
+    - device: Garmin eLog
+      model: GE1A01
+      eld_identifier: GE1A01
+      status: active
+    - device: Garmin eLog - dēzl 780, dēzlCam 785, dēzl OTR/LGV 800, dēzl OTR/LGV 810, dēzl OTR/LGV 1000, dēzl OTR/LGV
+        1010
+      model: GE1D01
+      eld_identifier: GE1D01
+      status: active
+    signal_note: 'certified_products = one entry for the ELD product type, SELF-certified by the manufacturer against
+      the FMCSA technical specifications (lapsed: true when every listed device is revoked); device rows are context,
+      never counted'
+    detected_by: sweep-fmcsa-eld-registered-devices.py
+    detected: '2026-10-22'
+  detected_by: sweep-fmcsa-eld-registered-devices.py
+  first_seen: '2026-10-22'
 generated: '2026-10-12'
 method: searched
 checked:
@@ -170,6 +215,8 @@ checked:
 - https://raw.githubusercontent.com/<repo>/HEAD/manifest.json
 - https://raw.githubusercontent.com/obsidianmd/obsidian-releases/793b52114f54b055b760ef47761ec5c93d689804/community-plugin-stats.json
 - https://raw.githubusercontent.com/obsidianmd/obsidian-releases/793b52114f54b055b760ef47761ec5c93d689804/community-plugins.json
+- https://eld.fmcsa.dot.gov/List/GetListOfELDs?listType=Revoked
+- https://eld.fmcsa.dot.gov/List/Index
 source:
 - https://docs.junction.com/wearables/providers/introduction
 - https://docs.tryterra.co/reference/health-and-fitness-api/supported-integrations
